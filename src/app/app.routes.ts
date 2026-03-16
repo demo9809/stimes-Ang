@@ -21,6 +21,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'accounting/payments',
+    loadComponent: () =>
+      import('./features/accounting/payments/payments.component').then(
+        (m) => m.PaymentsComponent
+      ),
+  },
+  {
     path: 'ai-copilot',
     loadComponent: () =>
       import('./features/ai-copilot/ai-copilot.component').then(

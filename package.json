@@ -25,6 +25,7 @@
     "@angular/cli": "^21.2.1",
     "@angular/compiler-cli": "^21.2.0",
     "prettier": "^3.8.1",
+    "puppeteer": "^24.39.1",
     "typescript": "~5.9.2"
   }
 }

@@ -10,7 +10,7 @@ import { KeyboardShortcutService } from '../../../core/services/keyboard-shortcu
   selector: 'app-journal-entries',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, JournalEntryModalComponent, JournalFilterModalComponent],
+  imports: [CommonModule, FormsModule, JournalFilterModalComponent],
   template: `
     <div class="je-page">
       <!-- Header Bar -->
@@ -160,10 +160,6 @@ import { KeyboardShortcutService } from '../../../core/services/keyboard-shortcu
       </div>
 
       <!-- Modals -->
-      @if (showCreateModal()) {
-        <app-journal-entry-modal (close)="closeCreateModal()"></app-journal-entry-modal>
-      }
-
       @if (showFilterModal()) {
         <app-journal-filter-modal (close)="closeFilterModal()"></app-journal-filter-modal>
       }
@@ -275,7 +271,6 @@ export class JournalEntriesComponent implements OnInit, OnDestroy {
   svc = inject(JournalEntryService);
   private shortcuts = inject(KeyboardShortcutService);
 
-  showCreateModal = signal(false);
   showFilterModal = signal(false);
 
   private unsubShortcuts: (() => void)[] = [];
@@ -299,8 +294,8 @@ export class JournalEntriesComponent implements OnInit, OnDestroy {
     this.svc.setSearchQuery(el.value);
   }
 
-  openCreateModal() { this.showCreateModal.set(true); }
-  closeCreateModal() { this.showCreateModal.set(false); }
+  openCreateModal() { this.svc.toggleCreateModal(true); }
+  closeCreateModal() { this.svc.toggleCreateModal(false); }
 
   openFilterModal() { this.showFilterModal.set(true); }
   closeFilterModal() { this.showFilterModal.set(false); }
@@ -314,7 +309,6 @@ export class JournalEntriesComponent implements OnInit, OnDestroy {
   }
 
   handleEscape() {
-    if (this.showCreateModal()) { this.closeCreateModal(); return; }
     if (this.showFilterModal()) { this.closeFilterModal(); return; }
   }
 

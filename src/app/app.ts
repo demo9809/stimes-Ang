@@ -11,12 +11,20 @@ import { AiPanelComponent } from './features/ai-panel/ai-panel.component';
 import { ShortcutsPanelComponent } from './shell/shortcuts-panel/shortcuts-panel.component';
 import { AiChatService } from './features/ai-panel/services/ai-chat.service';
 import { LayoutService } from './core/services/layout.service';
+import { PaymentModalComponent } from './features/accounting/payments/components/payment-modal/payment-modal.component';
+import { JournalEntryModalComponent } from './features/accounting/journal-entries/components/journal-entry-modal/journal-entry-modal.component';
+import { PaymentService } from './features/accounting/payments/services/payment.service';
+import { JournalEntryService } from './features/accounting/journal-entries/services/journal-entry.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterOutlet, SidebarComponent, TopbarComponent, NavModalComponent, AiPanelComponent, ShortcutsPanelComponent],
+  imports: [
+    CommonModule, RouterOutlet, SidebarComponent, TopbarComponent, 
+    NavModalComponent, AiPanelComponent, ShortcutsPanelComponent,
+    PaymentModalComponent, JournalEntryModalComponent
+  ],
   template: `
     <div class="app-shell">
       <!-- Sidebar -->
@@ -47,6 +55,19 @@ import { LayoutService } from './core/services/layout.service';
 
       <!-- Nav Modal (Ctrl+K or Win+Space) -->
       <app-nav-modal #navModal (onAskAI)="handleAiRoute($event)" />
+
+      <!-- Global Modals via Defer Blocks -->
+      @defer (when paymentService.showPaymentModal()) {
+        @if (paymentService.showPaymentModal()) {
+          <app-payment-modal />
+        }
+      }
+
+      @defer (when jeService.showCreateModal()) {
+        @if (jeService.showCreateModal()) {
+          <app-journal-entry-modal (close)="jeService.toggleCreateModal(false)" />
+        }
+      }
     </div>
   `,
   styles: [`
@@ -90,6 +111,8 @@ import { LayoutService } from './core/services/layout.service';
 export class AppComponent implements OnInit, OnDestroy {
   aiChat = inject(AiChatService);
   layout = inject(LayoutService);
+  paymentService = inject(PaymentService);
+  jeService = inject(JournalEntryService);
   navModal = viewChild<NavModalComponent>('navModal');
 
   ngOnInit(): void {
@@ -106,10 +129,15 @@ export class AppComponent implements OnInit, OnDestroy {
       e.preventDefault();
       this.navModal()?.open();
     }
-    // F7 → Open AI Panel
+    // F5 → Open Payment Modal
+    if (e.key === 'F5') {
+      e.preventDefault();
+      this.paymentService.togglePaymentModal(true);
+    }
+    // F7 → Open Journal Entry Modal
     if (e.key === 'F7') {
       e.preventDefault();
-      this.aiChat.openPanel();
+      this.jeService.toggleCreateModal(true);
     }
     // F11 → Toggle Maximize Workspace
     if (e.key === 'F11') {

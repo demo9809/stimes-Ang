@@ -31,9 +31,11 @@ export class JournalEntryService {
   ]);
 
   private _searchQuery = signal('');
+  private _showCreateModal = signal(false);
 
   readonly entries = this._entries.asReadonly();
   readonly searchQuery = this._searchQuery.asReadonly();
+  readonly showCreateModal = this._showCreateModal.asReadonly();
 
   readonly filteredEntries = computed(() => {
     const q = this._searchQuery().toLowerCase();
@@ -55,6 +57,10 @@ export class JournalEntryService {
 
   setSearchQuery(query: string) {
     this._searchQuery.set(query);
+  }
+
+  toggleCreateModal(show: boolean) {
+    this._showCreateModal.set(show);
   }
 
   saveEntry(entry: JournalEntry) {

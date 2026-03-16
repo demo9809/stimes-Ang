@@ -1316,7 +1316,22 @@ Every screen, panel, modal, drawer, table, and empty state must be fully respons
 **Important:** The root of the Git repository for this project is the `erp-app` directory, NOT the parent workspace folder. This allows the application to be directly deployed from platforms like Vercel because the framework config and package.json are at the repository root.
 If making commits or pushing code, ensure you are inside the `erp-app` directory where the local `.git` repository resides.
 
+---
 
+# 22. Navigation & Routing (Mandatory Rule)
+
+Whenever a new page, module, or feature is created (e.g., Payments, Receipts, Reports):
+1. **It MUST be added to the Left Navigation Bar.**
+2. If it is an accounting feature, it **MUST be added under the `Accounting` menu** in `sidebar.component.ts`.
+3. Never create "orphaned" pages that can only be accessed via keyboard shortcuts or hidden links. The left sidebar is the source of truth for all available modules.
+
+---
+
+# 23. Stimes Fi (AI Panel) Consistency
+
+- **Always keep the same StimesFi AI layout for all modal boxes.**
+- Instead of re-creating the AI sidebar from scratch in new modals, **reuse the existing `<app-ai-panel>` component** (usually from `src/app/features/ai-panel/ai-panel.component`).
+- The expansion behavior should be consistent: the modal width expands to accommodate the fixed-width AI panel (`width: 320px`), and `border-left` separates the AI panel from the main content.
 
 <!--
 

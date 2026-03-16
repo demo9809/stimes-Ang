@@ -1,14 +1,14 @@
-import { Component, ChangeDetectionStrategy, output, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, output, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JournalEntryLine } from '../../../../../core/models/journal-entry.model';
-import { AiPanelComponent } from '../../../../ai-panel/ai-panel.component';
+import { ModalAiPanelComponent } from '../../../../ai-panel/components/modal-ai-panel/modal-ai-panel.component';
 
 @Component({
   selector: 'app-journal-entry-modal',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, AiPanelComponent],
+  imports: [CommonModule, FormsModule, ModalAiPanelComponent],
   template: `
     <div class="modal-overlay" (click)="close.emit()">
       <div class="je-modal-outer" [class.maximized]="isMaximized()" [class.has-ai]="showAiPanel()" (click)="$event.stopPropagation()">
@@ -173,7 +173,14 @@ import { AiPanelComponent } from '../../../../ai-panel/ai-panel.component';
         <!-- AI Panel Area -->
         @if (showAiPanel()) {
           <div class="je-modal-ai">
-            <app-ai-panel [showModalActions]="false" />
+            <app-modal-ai-panel
+              [quickActions]="[
+                'Suggest accounts for this entry',
+                'Check for similar entries',
+                'Validate entry compliance',
+                'Auto-fill from template'
+              ]"
+            />
           </div>
         }
       </div>
@@ -215,6 +222,8 @@ import { AiPanelComponent } from '../../../../ai-panel/ai-panel.component';
       display: flex;
       flex-direction: column;
       background: var(--color-surface);
+      width: 320px;
+      flex-shrink: 0;
     }
     ::ng-deep .je-modal-ai .ai-panel {
       border: none !important;
@@ -366,5 +375,20 @@ export class JournalEntryModalComponent {
 
   stimesFiClick() {
     this.showAiPanel.update(v => !v);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.close.emit();
+    }
+    if (event.key === 'F11') {
+      event.preventDefault();
+      this.toggleMaximize();
+    }
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+      event.preventDefault();
+      // Add save execution logic here when needed
+    }
   }
 }

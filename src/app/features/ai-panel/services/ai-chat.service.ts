@@ -44,6 +44,10 @@ export class AiChatService {
   readonly quickActions = COA_QUICK_ACTIONS;
   readonly commands = COA_COMMANDS;
 
+  clearMessages(): void {
+    this._messages.set([]);
+  }
+
   setInput(val: string): void { this._inputValue.set(val); }
 
   togglePanel(): void { this._isPanelOpen.update(v => !v); }
