@@ -253,7 +253,7 @@ export class SidebarComponent {
         { id: 'coa', label: 'Chart of Accounts', route: '/accounting/chart-of-accounts' },
         { id: 'journal-entries', label: 'Journal Entries', route: '/accounting/journal-entries' },
         { id: 'payments', label: 'Payments', route: '/accounting/payments' },
-        { id: 'fixed-assets', label: 'Fixed Assets', route: '/fixed-assets' },
+        // { id: 'fixed-assets', label: 'Fixed Assets', route: '/fixed-assets' },
       ]
     },
     {
