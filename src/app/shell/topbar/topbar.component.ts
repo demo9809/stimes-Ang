@@ -37,7 +37,7 @@ import { AiChatService } from '../../features/ai-panel/services/ai-chat.service'
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
           </svg>
-          <span class="badge"></span>
+          <span class="notification-dot"></span>
         </button>
         <div class="user-profile">
           <div class="avatar">JD</div>
@@ -110,10 +110,11 @@ import { AiChatService } from '../../features/ai-panel/services/ai-chat.service'
     }
     .action-btn:hover { background: var(--color-surface-2); color: var(--color-text-primary); }
     .bell-btn { position: relative; }
-    .badge {
+    .notification-dot {
       position: absolute;
       top: 6px; right: 8px;
       width: 6px; height: 6px;
+      padding: 0;
       background: var(--color-danger);
       border-radius: 50%;
       border: 1px solid var(--color-surface);
