@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, signal, computed, HostListener } from '@angular/core';
-import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaymentService } from '../../services/payment.service';
 import { ModalAiPanelComponent } from '../../../../ai-panel/components/modal-ai-panel/modal-ai-panel.component';
@@ -7,7 +7,7 @@ import { ModalAiPanelComponent } from '../../../../ai-panel/components/modal-ai-
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CurrencyPipe, DecimalPipe, ModalAiPanelComponent],
+  imports: [CommonModule, FormsModule, DecimalPipe, ModalAiPanelComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Overlay backdrop -->

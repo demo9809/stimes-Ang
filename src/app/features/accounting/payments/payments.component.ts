@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
-import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaymentService } from './services/payment.service';
 import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
@@ -8,7 +8,7 @@ import { PaymentModalComponent } from './components/payment-modal/payment-modal.
   selector: 'app-payments',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, CurrencyPipe, DecimalPipe],
+  imports: [CommonModule, FormsModule, DecimalPipe],
   template: `
     <div class="payments-page">
       <!-- Header Bar -->
